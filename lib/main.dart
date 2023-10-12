@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
+import 'Models/PostsModel.dart';
+import 'package:http/http.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -6,15 +11,50 @@ void main() {
   ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  List<PostsModel> postsList = [];
+  Future<List<PostsModel>> getPosts() async {
+    var response =
+        await get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
+    var data = jsonDecode(response.body.toString());
+    if (response.statusCode == 200) {
+      for (Map i in data) {
+        postsList.add(PostsModel.fromJson(i));
+      }
+      return postsList;
+    } else {
+      return postsList;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text('Hello'),
+          Expanded(
+            child: FutureBuilder(
+                future: getPosts(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Text('Loading');
+                  } else {
+                    return ListView.builder(
+                      itemCount: postsList.length,
+                      itemBuilder: (context, index) => Text(index.toString()),
+                    );
+                  }
+                }),
+          ),
         ],
       ),
     );
