@@ -1,9 +1,11 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:convert';
 
 import 'package:apis_flutter/another_example_api.dart';
 import 'package:flutter/material.dart';
 
-import 'Models/PostsModel.dart';
+import 'Models/posts_model.dart';
 import 'package:http/http.dart';
 
 void main() {
