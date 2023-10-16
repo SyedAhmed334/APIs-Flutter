@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:apis_flutter/another_example_api.dart';
+import 'package:apis_flutter/product_page.dart';
 import 'package:flutter/material.dart';
 
 import 'Models/posts_model.dart';
@@ -10,7 +11,7 @@ import 'package:http/http.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: AnotherApi(),
+    home: ProductScreen(),
   ));
 }
 
